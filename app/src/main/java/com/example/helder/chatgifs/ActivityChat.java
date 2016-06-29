@@ -15,6 +15,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+
+import org.json.JSONObject;
+
 import java.util.Random;
 
 /**
@@ -29,6 +36,7 @@ public class ActivityChat extends AppCompatActivity
         private EditText editTextMensage;
         private Button buttonSendMensage;
         private static Random random;
+        String gifUrl;
         ListDisplay adapter;
 
 @Override
@@ -160,5 +168,42 @@ public boolean onNavigationItemSelected(MenuItem item) {
                 int randomNumber = (int) (fraction + aStart);
                 return randomNumber;
         }
+
+        //Retorna a url do gif encontrado
+        public void findRandomGif(String tag) {
+                String url = "http://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&";
+
+                //Busca por c categoria caso tiver
+                if (!tag.equals("")) {
+                        url += "tag="+tag;
+                }
+
+                Response.Listener<JSONObject> responseListener = new Response.Listener<JSONObject>() {
+
+                        @Override
+                        public void onResponse(JSONObject response) {
+                                try {
+                                        if(response != null && response.length() > 0) {
+                                                JSONObject data = response.getJSONObject("data");
+
+                                                //Pega url do gif de tamanho fixo e joga na variável global
+                                                gifUrl = data.getString("fixed_width_downsampled_url");
+
+                                                //Seta url do gif para aparecer no imageView
+//                                                setGifIntoImage(gifUrl);
+
+                                        } else { System.out.println("Nenhum gif foi encontrado."); }
+                                } catch (Exception e) { System.out.println("ERRO: " + e.getMessage()); }
+                        }
+                };
+                Response.ErrorListener responseErrorListener = new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) { System.out.println("ERRO: " + error.getMessage()); }
+                };
+                JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.GET, url, responseListener, responseErrorListener);
+
+                RestRequestManager.getInstance(ActivityChat.this).addToRequestQueue(jsObjRequest);
+        }
+
 
 }

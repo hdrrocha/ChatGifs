@@ -6,8 +6,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +18,7 @@ import java.util.List;
 public class ListDisplay extends ArrayAdapter<OneComment> {
 
 private TextView textViewItemMensage;
+private ImageView imageResponse;
 private List<OneComment> countries = new ArrayList<OneComment>();
 private LinearLayout wrapperMensageItem;
 
@@ -34,6 +38,15 @@ public int getCount() {
 
 public OneComment getItem(int index) {
     return this.countries.get(index);
+}
+
+//Seta gif da url dentro da imagem
+public void setGifIntoImage(String url, Context context) {
+    Glide.with(context) // replace with 'this' if it's in activity
+            .load(url)
+            .asGif()
+            .into(this.imageResponse);
+
 }
 
 public View getView(int position, View convertView, ViewGroup parent) {
