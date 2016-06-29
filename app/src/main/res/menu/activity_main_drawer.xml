@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/nav_logar"
+            android:icon="@drawable/ic_account_box_white_24dp"
+            android:title="Logar" />
+        <item
+            android:id="@+id/nav_chat"
+            android:icon="@drawable/ic_chat_white_24dp"
+            android:tint="@color/colorPrimary"
+            android:title="Chat" />
+
+    </group>
+
+
+
+</menu>
