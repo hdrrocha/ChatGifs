@@ -10,18 +10,15 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class ListDisplay extends ArrayAdapter<OneComment> {
 
 private TextView textViewItemMensage;
-private ImageView imageResponse;
 private List<OneComment> countries = new ArrayList<OneComment>();
 private LinearLayout wrapperMensageItem;
-
+private ImageView imageGif;
 
 public ListDisplay(Context context, int textViewResourceId) {
     super(context, textViewResourceId);
@@ -40,15 +37,6 @@ public OneComment getItem(int index) {
     return this.countries.get(index);
 }
 
-//Seta gif da url dentro da imagem
-public void setGifIntoImage(String url, Context context) {
-    Glide.with(context) // replace with 'this' if it's in activity
-            .load(url)
-            .asGif()
-            .into(this.imageResponse);
-
-}
-
 public View getView(int position, View convertView, ViewGroup parent) {
     View row = convertView;
     if (row == null) {
@@ -62,6 +50,11 @@ public View getView(int position, View convertView, ViewGroup parent) {
     textViewItemMensage = (TextView) row.findViewById(R.id.textViewItemMensage);
     textViewItemMensage.setText(coment.comment);
     textViewItemMensage.setBackgroundResource(coment.left ? R.drawable.buble2 : R.drawable.buble);
+    wrapperMensageItem.setGravity(coment.left ? Gravity.LEFT : Gravity.RIGHT);
+ //Carol aqui recupera a imagem que vc tem que por pro gif
+    imageGif = (ImageView) row.findViewById(R.id.imageGif);
+    imageGif.setImageResource(Integer.parseInt(coment.comment));
+    imageGif.setBackgroundResource(coment.left ? R.drawable.buble2 : R.drawable.buble);
     wrapperMensageItem.setGravity(coment.left ? Gravity.LEFT : Gravity.RIGHT);
     return row;
 }

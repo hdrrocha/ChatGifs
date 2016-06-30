@@ -74,11 +74,17 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_logar) {
-//            Intent intent = new Intent(this, ActivityChat.class);
-//            startActivity(intent);
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.meuFragment, FragmentLogar.newInstance(), "Login")
+                    .addToBackStack(null)
+                    .commit();
         } else if (id == R.id.nav_chat) {
-            Intent intent = new Intent(getApplicationContext(), ActivityChat.class);
-            startActivity(intent);
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.meuFragment, FragmentChat.newInstance(), "Enviar Gif")
+                    .addToBackStack(null)
+                    .commit();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
